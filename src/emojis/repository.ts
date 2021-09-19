@@ -7519,3 +7519,13 @@ export function getRemovedEmojis(): Promise<Emoji[]> {
     emojis.filter(emoji => emoji.category === 'removed'),
   );
 }
+export function setToFavoriteEmojis(emoji: Emoji): Promise<Emoji> {
+  const indexOfEmoji = emojis.findIndex(
+    currentEmoji => currentEmoji.name === emoji.name,
+  );
+  if (indexOfEmoji < 0) {
+    return Promise.reject(new Error(`${emoji} not found`));
+  }
+  emojis[indexOfEmoji].category = 'favorite';
+  return Promise.resolve(emojis[indexOfEmoji]);
+}
